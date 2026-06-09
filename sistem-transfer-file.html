@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Nebula Transfer — Upload & Bagikan File</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="stylesheet" href="btn.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 30%, #0a0f1e, #03050b);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            position: relative;
+            color: #eef5ff;
+        }
+
+        /* efek partikel halus (gradient animasi) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 40% 50%, rgba(30, 100, 200, 0.08), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* container utama */
+        .glass-card {
+            background: rgba(15, 25, 45, 0.55);
+            backdrop-filter: blur(14px);
+            border-radius: 3rem;
+            border: 1px solid rgba(72, 187, 255, 0.25);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4), 0 0 0 0.5px rgba(100, 210, 255, 0.2) inset;
+            width: 100%;
+            max-width: 680px;
+            padding: 2.2rem 2rem 2.8rem;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        /* header stylish */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 212, 255, 0.12);
+            padding: 0.45rem 1rem;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            backdrop-filter: blur(2px);
+            border: 0.5px solid rgba(0, 212, 255, 0.5);
+            margin-bottom: 1.5rem;
+        }
+
+        .badge i {
+            font-size: 0.9rem;
+            color: #3bc9ff;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #a0d2ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.6rem;
+            letter-spacing: -0.5px;
+        }
+
+        .sub {
+            font-size: 1rem;
+            color: #b9d9ff;
+            margin-bottom: 2rem;
+            border-left: 3px solid #3b82f6;
+            padding-left: 1rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        /* area info drive */
+        .drive-info {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 1.8rem;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: space-between;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .drive-icon {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+        }
+
+        .drive-icon i {
+            font-size: 1.5rem;
+            color: #3b82f6;
+        }
+
+        .access-tag {
+            background: #0f2b3d;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #9acdff;
+        }
+
+        .access-tag i {
+            margin-right: 0.3rem;
+            font-size: 0.7rem;
+        }
+
+        /* tombol utama super keren */
+        .transfer-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            width: 100%;
+            background: linear-gradient(105deg, #1e6df2, #0a4bc2);
+            border: none;
+            padding: 1.2rem 0;
+            font-size: 1.3rem;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            border-radius: 2.5rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 12px 25px -8px rgba(0, 100, 255, 0.4);
+            margin-bottom: 1.8rem;
+            backdrop-filter: blur(2px);
+            border: 0.5px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .transfer-btn i {
+            font-size: 1.5rem;
+            transition: transform 0.2s;
+        }
+
+        .transfer-btn:hover {
+            transform: scale(1.02);
+            background: linear-gradient(105deg, #2f7aff, #1060df);
+            box-shadow: 0 18px 28px -8px #0055ff66;
+        }
+
+        .transfer-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* informasi keamanan & catatan */
+        .secure-note {
+            display: flex;
+            gap: 0.8rem;
+            background: rgba(0, 30, 60, 0.5);
+            border-radius: 1.5rem;
+            padding: 1rem 1.2rem;
+            font-size: 0.85rem;
+            align-items: center;
+            border-left: 3px solid #2dd4bf;
+        }
+
+        .secure-note i {
+            font-size: 1.4rem;
+            color: #2dd4bf;
+        }
+
+        .secure-note p {
+            line-height: 1.4;
+            color: #cde3ff;
+        }
+
+        .folder-link {
+            font-size: 0.75rem;
+            margin-top: 1.2rem;
+            text-align: center;
+            word-break: break-all;
+            background: #0c1222b3;
+            padding: 0.6rem;
+            border-radius: 2rem;
+            font-family: monospace;
+            display: inline-block;
+            width: 100%;
+        }
+
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.7rem;
+            opacity: 0.6;
+            letter-spacing: 0.3px;
+        }
+
+        /* animasi pulse untuk badge */
+        @keyframes softPulse {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .pulse {
+            animation: softPulse 1.8s infinite alternate;
+        }
+
+        @media (max-width: 550px) {
+            .glass-card {
+                padding: 1.6rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .transfer-btn {
+                font-size: 1.1rem;
+                padding: 1rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<a href="tools/index.html" class="back-to-index"><i class="fas fa-sign-out-alt"></i>Kembali</a>
+<div class="glass-card">
+    <div class="badge">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <span>Transfer aman & instan</span>
+        <i class="fas fa-lock-open" style="font-size: 0.7rem; opacity:0.7"></i>
+    </div>
+    
+    <h1>
+        <i class="fab fa-google-drive" style="font-size: 2rem; vertical-align: middle; margin-right: 8px;"></i> 
+        DriveFlow
+    </h1>
+    <div class="sub">Kirim file besar tanpa batas • tautan bersama</div>
+    
+    <!-- info folder drive dengan akses publik (siapa pun dengan link) -->
+    <div class="drive-info">
+        <div class="drive-icon">
+            <i class="fab fa-google"></i>
+            <span>Folder Tujuan :</span>
+        </div>
+        <div class="access-tag">
+            <i class="fas fa-globe-asia"></i> Akses: siapa pun dengan tautan
+        </div>
+    </div>
+    
+    <!-- TOMBOL UTAMA : KLIK -> ARahkan ke folder Google Drive (dapat diupload oleh pemilik link) -->
+    <button class="transfer-btn" id="openDriveFolderBtn">
+        <i class="fas fa-folder-open"></i> Buka Folder Transfer
+        <i class="fas fa-arrow-right"></i>
+    </button>
+    
+    <!-- penjelasan interaktif -->
+    <div class="secure-note">
+        <i class="fas fa-shield-alt"></i>
+        <p><strong>Link publik dengan akses uploader</strong><br>
+        Folder Google Drive ini telah disetting agar siapa pun yang memiliki tautan dapat mengunggah file. Klik tombol di atas, lalu seret file kamu ke dalam folder. Mudah, cepat, dan aman.</p>
+    </div>
+    
+    <!-- link preview dinamis (tampilan link yang akan dituju) -->
+    <div class="folder-link" id="folderLinkPreview">
+        <i class="fas fa-link"></i> Menyiapkan tautan...
+    </div>
+    
+    <footer>
+        <i class="fas fa-sync-alt"></i> Transfer file maksimal sesuai kapasitas drive | pemilik folder dapat mengelola
+    </footer>
+</div>
+
+<script>
+    // ============================================================
+    // KONFIGURASI FOLDER GOOGLE DRIVE (PUBLIK DENGAN AKSES UPLOAD)
+    // ============================================================
+    // GANTI DENGAN LINK FOLDER GOOGLE DRIVE ASLI YANG SUDAH DISET "SIAPA PUN DENGAN TAUTAN BISA UPLOAD"
+    // Contoh: "https://drive.google.com/drive/folders/1ABC123xyz?usp=sharing"
+    // Pastikan folder di-sharing dengan role "Contributor" atau "Editor" agar bisa upload via link.
+    // 
+    // INGAT: Untuk upload langsung via browser, user harus login ke akun Google mereka.
+    // Tapi dengan tautan folder ini, mereka dapat membuka dan mengunggah file (drag & drop / klik tombol baru).
+    // Ini adalah metode standar Google Drive untuk kolaborasi.
+    //
+    // Silakan ganti variable di bawah dengan URL folder Google Drive milik kamu:
+    const TARGET_DRIVE_FOLDER_URL = "https://drive.google.com/drive/folders/1NqEIXNzthnC4TsR0vdEKlwe-pc-XA4lt";
+    
+    // CATATAN PENTING:
+    // URL di atas adalah contoh dummy, jika tidak diubah akan mengarah ke contoh folder.
+    // Kamu harus membuat folder di Google Drive -> klik kanan folder -> "Bagikan" -> 
+    // ubah menjadi "Siapa pun dengan tautan" -> di bagian "Peran" pilih "Editor" (agar bisa mengupload file).
+    // Kemudian copy link folder dan tempelkan ke variable TARGET_DRIVE_FOLDER_URL.
+    // Setelah itu, tombol akan mengarahkan ke folder tersebut.
+    // ============================================================
+    
+    // Validasi sederhana : pastikan URL mengandung format folder google drive
+    function isValidDriveFolderUrl(url) {
+        if (!url) return false;
+        // pola dasar: mengandung "drive.google.com/drive/folders/" atau "drive.google.com/open?id="
+        return url.includes("drive.google.com/drive/folders/") || url.includes("drive.google.com/open?id=") || url.includes("folders/");
+    }
+    
+    // ambil elemen tombol & preview
+    const openBtn = document.getElementById('openDriveFolderBtn');
+    const previewSpan = document.getElementById('folderLinkPreview');
+    
+    // fungsi untuk membersihkan URL dan menampilkan preview yang rapih
+    function beautifyFolderLink(rawUrl) {
+        if (!rawUrl) return "#";
+        try {
+            // jika URL sudah mengandung https? coba parsing
+            let urlObj = new URL(rawUrl);
+            let pathParts = urlObj.pathname.split('/');
+            let folderId = null;
+            if (urlObj.pathname.includes('/folders/')) {
+                let match = urlObj.pathname.match(/\/folders\/([a-zA-Z0-9_-]+)/);
+                if (match) folderId = match[1];
+            } else if (urlObj.searchParams.has('id')) {
+                folderId = urlObj.searchParams.get('id');
+            }
+            if (folderId) {
+                return `https://drive.google.com/drive/folders/${folderId}?usp=sharing`;
+            }
+            return rawUrl;
+        } catch(e) {
+            // jika URL invalid, kembalikan raw
+            return rawUrl;
+        }
+    }
+    
+    // update preview dan validasi
+    function updatePreview() {
+        let currentUrl = TARGET_DRIVE_FOLDER_URL;
+        if (!currentUrl || currentUrl === "") {
+            previewSpan.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Belum ada folder yang diset. Ganti variable TARGET_DRIVE_FOLDER_URL dengan link folder drive Anda.`;
+            previewSpan.style.background = "#3a1f1f80";
+            openBtn.disabled = true;
+            openBtn.style.opacity = "0.6";
+            openBtn.style.cursor = "not-allowed";
+            openBtn.title = "Folder belum dikonfigurasi";
+        } else {
+            let cleanLink = beautifyFolderLink(currentUrl);
+            if (isValidDriveFolderUrl(currentUrl) || currentUrl.includes("drive.google.com")) {
+                previewSpan.innerHTML = `<i class="fab fa-google-drive"></i> Tujuan: ${cleanLink.substring(0, 60)}${cleanLink.length > 60 ? '...' : ''}`;
+                previewSpan.style.background = "#0c1222b3";
+                openBtn.disabled = false;
+                openBtn.style.opacity = "1";
+                openBtn.style.cursor = "pointer";
+            } else {
+                previewSpan.innerHTML = `<i class="fas fa-exclamation-circle"></i> URL folder tidak valid. Pastikan menggunakan link share dari Google Drive (format /folders/...).`;
+                previewSpan.style.background = "#4a1a1a80";
+                openBtn.disabled = true;
+                openBtn.style.opacity = "0.6";
+                openBtn.style.cursor = "not-allowed";
+            }
+        }
+    }
+    
+    // event klik tombol: arahkan ke folder drive di tab baru (atau tab yang sama)
+    function redirectToDriveFolder() {
+        let targetUrl = TARGET_DRIVE_FOLDER_URL;
+        if (!targetUrl) {
+            alert("⚠️ Folder Google Drive belum dikonfigurasi. Silakan ganti TARGET_DRIVE_FOLDER_URL dengan link folder kamu yang memiliki akses 'Siapa pun dengan tautan bisa upload'.");
+            return;
+        }
+        
+        // pastikan URL mengandung https jika diperlukan
+        let finalUrl = targetUrl;
+        if (!finalUrl.startsWith('http')) {
+            finalUrl = 'https://' + finalUrl;
+        }
+        
+        // membuka link folder Google Drive (target _blank agar tidak meninggalkan halaman transfer)
+        window.open(finalUrl, '_blank');
+        // efek notifikasi opsional (memberi umpan balik)
+        // optional: kita bisa menampilkan tooltip sukses
+        showTemporaryToast();
+    }
+    
+    // fungsi notifikasi singkat yang stylish
+    function showTemporaryToast() {
+        // membuat elemen toast sementara (jika tidak ada)
+        let existingToast = document.querySelector('.custom-toast-upload');
+        if(existingToast) existingToast.remove();
+        
+        let toast = document.createElement('div');
+        toast.className = 'custom-toast-upload';
+        toast.innerHTML = `
+            <div style="background:#0a1f2e; backdrop-filter:blur(12px); padding:0.8rem 1.5rem; border-radius: 3rem; border-left: 4px solid #3b82f6; box-shadow:0 10px 20px rgba(0,0,0,0.3); display:flex; align-items:center; gap:12px; font-weight:500;">
+                <i class="fas fa-folder-open" style="color:#3b82f6; font-size:1.2rem;"></i>
+                <span>📁 Mengarahkan ke folder Google Drive... pastikan login untuk upload</span>
+                <i class="fas fa-external-link-alt" style="font-size:0.8rem; opacity:0.7"></i>
+            </div>
+        `;
+        toast.style.position = 'fixed';
+        toast.style.bottom = '25px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.zIndex = '999';
+        toast.style.fontSize = '0.85rem';
+        toast.style.pointerEvents = 'none';
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.style.transition = 'opacity 0.3s';
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 400);
+        }, 2800);
+    }
+    
+    // tambahkan event listener
+    if (openBtn) {
+        openBtn.addEventListener('click', redirectToDriveFolder);
+    }
+    
+    // inisiasi tampilan preview
+    updatePreview();
+    
+    // tambahkan efek hover dinamis pada card
+    const card = document.querySelector('.glass-card');
+    if(card){
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const xc = (x / rect.width - 0.5) * 6;
+            const yc = (y / rect.height - 0.5) * 6;
+            card.style.transform = `perspective(1200px) rotateY(${xc * 0.5}deg) rotateX(${-yc * 0.3}deg)`;
+            card.style.transition = 'transform 0.1s ease';
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1200px) rotateY(0deg) rotateX(0deg)';
+            card.style.transition = 'transform 0.4s ease';
+        });
+    }
+    
+    // instruksi tambahan di console (developer friendly)
+    console.log("🚀 Transfer file web | Gunakan folder Google Drive dengan izin upload publik.");
+    console.log("📌 Folder target:", TARGET_DRIVE_FOLDER_URL);
+    console.log("📌 Tips: Pastikan folder drive di-share dengan 'Siapa pun dengan tautan' dan peran 'Editor' agar bisa upload.");
+</script>
+
+<!-- catatan tambahan untuk user (penjelasan interaktif) -->
+</body>
+</html>

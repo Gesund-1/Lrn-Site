@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Kalkulator Bangun Datar & Ruang | Volume, Luas, Luas Permukaan, Selimut</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            padding: 1.5rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.15);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #7dd3fc;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            border: 1px solid rgba(56, 189, 248, 0.15);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .options-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .option-group {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .option-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+            display: block;
+            letter-spacing: 0.5px;
+        }
+
+        select {
+            width: 100%;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 0.8rem 1rem;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        select:hover, select:focus {
+            border-color: #38bdf8;
+            outline: none;
+        }
+
+        .input-area {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            padding: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            margin-bottom: 0.4rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 0.8rem 1rem;
+            color: white;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: #38bdf8;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+        }
+
+        .btn-hitung {
+            background: linear-gradient(135deg, #38bdf8, #3b82f6);
+            border: none;
+            border-radius: 40px;
+            padding: 0.9rem 1.5rem;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .btn-hitung:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(56, 189, 248, 0.4);
+        }
+
+        .result-area {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 24px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .result-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #7e8ba3;
+            letter-spacing: 1px;
+        }
+
+        .result-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #facc15;
+            word-break: break-word;
+            font-family: monospace;
+        }
+
+        .result-unit {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 0.3rem;
+        }
+
+        .formula-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 0.8rem;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-align: center;
+            font-family: monospace;
+        }
+
+        @media (max-width: 640px) {
+            body { padding: 1rem; }
+            .card { padding: 1rem; }
+            .result-value { font-size: 1.6rem; }
+            h1 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="badge"><i class="fas fa-calculator"></i> GEOMETRY CALCULATOR</div>
+        <h1> Bangun Datar & Ruang</h1>
+        <div class="subtitle">Hitung Luas | Volume | Luas Permukaan | Luas Selimut</div>
+    </div>
+
+    <div class="card">
+        <div class="options-row">
+            <div class="option-group">
+                <div class="option-label"><i class="fas fa-shapes"></i> Tipe Bangun</div>
+                <select id="typeSelect">
+                    <option value="datar">Bangun Datar</option>
+                    <option value="ruang">Bangun Ruang</option>
+                </select>
+            </div>
+            <div class="option-group">
+                <div class="option-label"><i class="fas fa-cube"></i> Pilih Bangun</div>
+                <select id="shapeSelect"></select>
+            </div>
+            <div class="option-group">
+                <div class="option-label"><i class="fas fa-chart-simple"></i> Hitung</div>
+                <select id="calcTypeSelect"></select>
+            </div>
+        </div>
+
+        <div id="inputArea" class="input-area"></div>
+
+        <button class="btn-hitung" id="hitungBtn"><i class="fas fa-equals"></i> HITUNG</button>
+
+        <div class="result-area">
+            <div class="result-label">HASIL</div>
+            <div class="result-value" id="resultValue">—</div>
+            <div class="result-unit" id="resultUnit"></div>
+            <div class="formula-box" id="formulaBox">Pilih bangun dan parameter untuk mulai</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ==============================================
+    // DATA BANGUN DATAR & RUANG + RUMUS
+    // ==============================================
+    
+    // Fungsi untuk mendapatkan nilai PI berdasarkan kelipatan 7
+    function getPiValue(r) {
+        if (r && Math.abs(r % 7) < 0.0001) {
+            return 22/7;
+        }
+        return 3.14;
+    }
+
+    const bangunData = {
+        datar: {
+            persegi: { name: "Persegi", inputs: [{ label: "Sisi (s)", symbol: "s", unit: "cm" }], hitung: (type, v) => v.s * v.s, rumus: { luas: "L = s × s" }, satuan: { luas: "cm²" } },
+            persegiPanjang: { name: "Persegi Panjang", inputs: [{ label: "Panjang (p)", symbol: "p", unit: "cm" }, { label: "Lebar (l)", symbol: "l", unit: "cm" }], hitung: (type, v) => v.p * v.l, rumus: { luas: "L = p × l" }, satuan: { luas: "cm²" } },
+            segitiga: { name: "Segitiga", inputs: [{ label: "Alas (a)", symbol: "a", unit: "cm" }, { label: "Tinggi (t)", symbol: "t", unit: "cm" }], hitung: (type, v) => 0.5 * v.a * v.t, rumus: { luas: "L = ½ × a × t" }, satuan: { luas: "cm²" } },
+            lingkaran: { name: "Lingkaran", inputs: [{ label: "Jari-jari (r)", symbol: "r", unit: "cm" }], hitung: (type, v) => { let pi = getPiValue(v.r); return pi * v.r * v.r; }, rumus: { luas: "L = π × r²" }, satuan: { luas: "cm²" } },
+            jajarGenjang: { name: "Jajar Genjang", inputs: [{ label: "Alas (a)", symbol: "a", unit: "cm" }, { label: "Tinggi (t)", symbol: "t", unit: "cm" }], hitung: (type, v) => v.a * v.t, rumus: { luas: "L = a × t" }, satuan: { luas: "cm²" } },
+            trapesium: { name: "Trapesium", inputs: [{ label: "Sisi a (a)", symbol: "a", unit: "cm" }, { label: "Sisi b (b)", symbol: "b", unit: "cm" }, { label: "Tinggi (t)", symbol: "t", unit: "cm" }], hitung: (type, v) => 0.5 * (v.a + v.b) * v.t, rumus: { luas: "L = ½ × (a + b) × t" }, satuan: { luas: "cm²" } },
+            belahKetupat: { name: "Belah Ketupat", inputs: [{ label: "Diagonal 1 (d1)", symbol: "d1", unit: "cm" }, { label: "Diagonal 2 (d2)", symbol: "d2", unit: "cm" }], hitung: (type, v) => 0.5 * v.d1 * v.d2, rumus: { luas: "L = ½ × d1 × d2" }, satuan: { luas: "cm²" } },
+            layangLayang: { name: "Layang-layang", inputs: [{ label: "Diagonal 1 (d1)", symbol: "d1", unit: "cm" }, { label: "Diagonal 2 (d2)", symbol: "d2", unit: "cm" }], hitung: (type, v) => 0.5 * v.d1 * v.d2, rumus: { luas: "L = ½ × d1 × d2" }, satuan: { luas: "cm²" } }
+        },
+        ruang: {
+            kubus: { name: "Kubus", inputs: [{ label: "Sisi (s)", symbol: "s", unit: "cm" }], hitung: (type, v) => { if (type === "volume") return v.s ** 3; if (type === "luasPermukaan") return 6 * v.s ** 2; if (type === "luasSelimut") return 4 * v.s ** 2; return null; }, rumus: { volume: "V = s³", luasPermukaan: "Lp = 6 × s²", luasSelimut: "Ls = 4 × s²" }, satuan: { volume: "cm³", luasPermukaan: "cm²", luasSelimut: "cm²" } },
+            balok: { name: "Balok", inputs: [{ label: "Panjang (p)", symbol: "p", unit: "cm" }, { label: "Lebar (l)", symbol: "l", unit: "cm" }, { label: "Tinggi (t)", symbol: "t", unit: "cm" }], hitung: (type, v) => { if (type === "volume") return v.p * v.l * v.t; if (type === "luasPermukaan") return 2 * (v.p*v.l + v.p*v.t + v.l*v.t); if (type === "luasSelimut") return 2 * (v.p*v.t + v.l*v.t); return null; }, rumus: { volume: "V = p × l × t", luasPermukaan: "Lp = 2(pl + pt + lt)", luasSelimut: "Ls = 2t(p + l)" }, satuan: { volume: "cm³", luasPermukaan: "cm²", luasSelimut: "cm²" } },
+            tabung: { name: "Tabung", inputs: [{ label: "Jari-jari (r)", symbol: "r", unit: "cm" }, { label: "Tinggi (t)", symbol: "t", unit: "cm" }], hitung: (type, v) => { let pi = getPiValue(v.r); if (type === "volume") return pi * v.r ** 2 * v.t; if (type === "luasPermukaan") return 2 * pi * v.r * (v.r + v.t); if (type === "luasSelimut") return 2 * pi * v.r * v.t; return null; }, rumus: { volume: "V = π × r² × t", luasPermukaan: "Lp = 2πr(r + t)", luasSelimut: "Ls = 2πr × t" }, satuan: { volume: "cm³", luasPermukaan: "cm²", luasSelimut: "cm²" } },
+            kerucut: { name: "Kerucut", inputs: [{ label: "Jari-jari (r)", symbol: "r", unit: "cm" }, { label: "Tinggi (t)", symbol: "t", unit: "cm" }, { label: "Garis Pelukis (s)", symbol: "s", unit: "cm" }], hitung: (type, v) => { let pi = getPiValue(v.r); let s = v.s || Math.sqrt(v.r ** 2 + v.t ** 2); if (type === "volume") return (1/3) * pi * v.r ** 2 * v.t; if (type === "luasPermukaan") return pi * v.r * (v.r + s); if (type === "luasSelimut") return pi * v.r * s; return null; }, rumus: { volume: "V = ⅓ × π × r² × t", luasPermukaan: "Lp = πr(r + s)", luasSelimut: "Ls = π × r × s" }, satuan: { volume: "cm³", luasPermukaan: "cm²", luasSelimut: "cm²" } },
+            bola: { name: "Bola", inputs: [{ label: "Jari-jari (r)", symbol: "r", unit: "cm" }], hitung: (type, v) => { let pi = getPiValue(v.r); if (type === "volume") return (4/3) * pi * v.r ** 3; if (type === "luasPermukaan") return 4 * pi * v.r ** 2; if (type === "luasSelimut") return 2 * pi * v.r ** 2; return null; }, rumus: { volume: "V = ⁴⁄₃ × π × r³", luasPermukaan: "Lp = 4 × π × r²", luasSelimut: "Ls = 2 × π × r²" }, satuan: { volume: "cm³", luasPermukaan: "cm²", luasSelimut: "cm²" } },
+            limasSegiempat: { name: "Limas Segiempat", inputs: [{ label: "Panjang alas (p)", symbol: "p", unit: "cm" }, { label: "Lebar alas (l)", symbol: "l", unit: "cm" }, { label: "Tinggi limas (t)", symbol: "t", unit: "cm" }], hitung: (type, v) => { if (type === "volume") return (1/3) * v.p * v.l * v.t; if (type === "luasPermukaan") { let smP = Math.sqrt((v.p/2)**2 + v.t**2); let smL = Math.sqrt((v.l/2)**2 + v.t**2); return (v.p*v.l) + (v.p*smL) + (v.l*smP); } if (type === "luasSelimut") { let smP = Math.sqrt((v.p/2)**2 + v.t**2); let smL = Math.sqrt((v.l/2)**2 + v.t**2); return (v.p*smL) + (v.l*smP); } return null; }, rumus: { volume: "V = ⅓ × p × l × t", luasPermukaan: "Lp = Lalas + jumlah sisi tegak", luasSelimut: "Ls = jumlah sisi tegak" }, satuan: { volume: "cm³", luasPermukaan: "cm²", luasSelimut: "cm²" } },
+            prismaSegitiga: { name: "Prisma Segitiga", inputs: [{ label: "Alas segitiga (a)", symbol: "a", unit: "cm" }, { label: "Tinggi segitiga (t_seg)", symbol: "t_seg", unit: "cm" }, { label: "Tinggi prisma (tp)", symbol: "tp", unit: "cm" }], hitung: (type, v) => { let luasAlas = 0.5 * v.a * v.t_seg; let sisiMiring = Math.sqrt((v.a/2)**2 + v.t_seg**2); let keliling = v.a + sisiMiring + sisiMiring; if (type === "volume") return luasAlas * v.tp; if (type === "luasPermukaan") return (2 * luasAlas) + (keliling * v.tp); if (type === "luasSelimut") return keliling * v.tp; return null; }, rumus: { volume: "V = Lalas × tp", luasPermukaan: "Lp = 2Lalas + Kalas × tp", luasSelimut: "Ls = Kalas × tp" }, satuan: { volume: "cm³", luasPermukaan: "cm²", luasSelimut: "cm²" } }
+        }
+    };
+
+    // DOM Elements
+    const typeSelect = document.getElementById('typeSelect');
+    const shapeSelect = document.getElementById('shapeSelect');
+    const calcTypeSelect = document.getElementById('calcTypeSelect');
+    const inputArea = document.getElementById('inputArea');
+    const hitungBtn = document.getElementById('hitungBtn');
+    const resultValue = document.getElementById('resultValue');
+    const resultUnit = document.getElementById('resultUnit');
+    const formulaBox = document.getElementById('formulaBox');
+
+    function updateShapeOptions() {
+        const type = typeSelect.value;
+        const shapes = bangunData[type];
+        shapeSelect.innerHTML = '';
+        for (let key in shapes) {
+            let opt = document.createElement('option');
+            opt.value = key;
+            opt.textContent = shapes[key].name;
+            shapeSelect.appendChild(opt);
+        }
+        updateCalcTypeOptions();
+    }
+
+    function updateCalcTypeOptions() {
+        const type = typeSelect.value;
+        const shapeKey = shapeSelect.value;
+        const shape = bangunData[type][shapeKey];
+        calcTypeSelect.innerHTML = '';
+        if (type === 'datar') {
+            let opt = document.createElement('option');
+            opt.value = 'luas';
+            opt.textContent = ' Luas';
+            calcTypeSelect.appendChild(opt);
+        } else {
+            let opts = ['volume', 'luasPermukaan', 'luasSelimut'];
+            let labels = { volume: ' Volume', luasPermukaan: ' Luas Permukaan', luasSelimut: ' Luas Selimut' };
+            opts.forEach(t => {
+                if (shape.hitung(t, { s:1, p:1, l:1, t:1, r:1, a:1, b:1, d1:1, d2:1, t_seg:1, tp:1 }) !== null) {
+                    let opt = document.createElement('option');
+                    opt.value = t;
+                    opt.textContent = labels[t];
+                    calcTypeSelect.appendChild(opt);
+                }
+            });
+        }
+        updateInputFields();
+    }
+
+    function updateInputFields() {
+        const type = typeSelect.value;
+        const shapeKey = shapeSelect.value;
+        const shape = bangunData[type][shapeKey];
+        inputArea.innerHTML = '';
+        if (!shape) return;
+        shape.inputs.forEach(inp => {
+            let div = document.createElement('div');
+            div.className = 'input-group';
+            div.innerHTML = `<label><i class="fas fa-ruler"></i> ${inp.label}</label><input type="number" id="${inp.symbol}" placeholder="Masukkan ${inp.label}" step="any" value="">`;
+            inputArea.appendChild(div);
+        });
+        let calcType = calcTypeSelect.value;
+        if (shape.rumus && shape.rumus[calcType]) formulaBox.innerHTML = `<i class="fas fa-book-open"></i> Rumus: ${shape.rumus[calcType]}`;
+        else formulaBox.innerHTML = `<i class="fas fa-book-open"></i> Pilih bangun dan hitungan`;
+    }
+
+    function getInputValues() {
+        const type = typeSelect.value;
+        const shapeKey = shapeSelect.value;
+        const shape = bangunData[type][shapeKey];
+        let values = {};
+        shape.inputs.forEach(inp => {
+            let el = document.getElementById(inp.symbol);
+            let val = parseFloat(el?.value);
+            values[inp.symbol] = isNaN(val) ? 0 : val;
+        });
+        return values;
+    }
+
+    function calculate() {
+        const type = typeSelect.value;
+        const shapeKey = shapeSelect.value;
+        const calcType = calcTypeSelect.value;
+        const shape = bangunData[type][shapeKey];
+        if (!shape || !shape.hitung) { resultValue.innerHTML = 'Error'; return; }
+        let values = getInputValues();
+        let hasil = shape.hitung(calcType, values);
+        if (hasil === null || isNaN(hasil)) { resultValue.innerHTML = 'Tidak tersedia'; resultUnit.innerHTML = ''; }
+        else {
+            let formatted = Math.abs(hasil) > 1000 ? hasil.toLocaleString('id-ID', { maximumFractionDigits: 2 }) : hasil.toFixed(2);
+            resultValue.innerHTML = formatted;
+            let satuan = (shape.satuan && shape.satuan[calcType]) ? shape.satuan[calcType] : (type === 'datar' ? 'cm²' : 'cm³');
+            resultUnit.innerHTML = satuan;
+        }
+        if (shape.rumus && shape.rumus[calcType]) formulaBox.innerHTML = `<i class="fas fa-book-open"></i> Rumus: ${shape.rumus[calcType]}`;
+    }
+
+    // Event listeners
+    typeSelect.addEventListener('change', () => { updateShapeOptions(); calculate(); });
+    shapeSelect.addEventListener('change', () => { updateCalcTypeOptions(); calculate(); });
+    calcTypeSelect.addEventListener('change', () => { updateInputFields(); calculate(); });
+    hitungBtn.addEventListener('click', calculate);
+    
+    // Initial load
+    updateShapeOptions();
+    calculate();
+</script>
+<script src="home-button.js"></script>
+</body>
+</html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Konverter Lengkap: Biner, Desimal, Oktal, Heksadesimal</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', 'Courier New', 'Fira Code', monospace;
+        }
+
+        body {
+            background: linear-gradient(145deg, #10131c 0%, #1a1f2e 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(22, 26, 40, 0.75);
+            backdrop-filter: blur(2px);
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            padding: 1.8rem;
+            transition: all 0.2s;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #E6F7FF, #A0D2FF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            letter-spacing: -0.3px;
+        }
+
+        .sub {
+            text-align: center;
+            color: #8e9aaf;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            border-bottom: 1px dashed #2e3a55;
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        /* grid konverter */
+        .konverter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .konverter-card {
+            background: #0f121cb3;
+            backdrop-filter: blur(4px);
+            border-radius: 1.6rem;
+            border: 1px solid rgba(72, 187, 255, 0.2);
+            padding: 1.2rem 1.4rem;
+            transition: transform 0.1s ease, border-color 0.2s;
+        }
+
+        .konverter-card:hover {
+            border-color: #3b82f670;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .judul-konv {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #cbd5ff;
+            border-left: 4px solid #3b82f6;
+            padding-left: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .judul-konv span {
+            background: #1e2a3e;
+            font-size: 0.7rem;
+            padding: 2px 10px;
+            border-radius: 40px;
+            font-weight: normal;
+            color: #90cdf4;
+        }
+
+        .input-area {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: #90a4cd;
+        }
+
+        input, select {
+            background: #03050b;
+            border: 1px solid #2c3a5a;
+            border-radius: 1.2rem;
+            padding: 0.7rem 1rem;
+            font-size: 1rem;
+            font-family: 'Fira Code', monospace;
+            color: #f0f3ff;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px #3b82f620;
+        }
+
+        button {
+            background: #2563eb;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            margin-top: 6px;
+            font-family: inherit;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+            transform: scale(0.98);
+            box-shadow: 0 2px 8px #1e3a8a80;
+        }
+
+        .hasil-box {
+            background: #03050bb3;
+            border-radius: 1.2rem;
+            padding: 0.8rem 1rem;
+            margin-top: 12px;
+            border-left: 3px solid #3b82f6;
+            word-break: break-all;
+        }
+
+        .hasil-label {
+            font-size: 0.7rem;
+            color: #7e8bb6;
+            letter-spacing: 0.5px;
+        }
+
+        .hasil-value {
+            font-family: 'Fira Code', monospace;
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: #bbd9ff;
+            margin-top: 5px;
+        }
+
+        .error {
+            color: #f97316;
+            font-size: 0.7rem;
+            margin-top: 5px;
+        }
+
+        hr {
+            border-color: #2e3a55;
+            margin: 0.8rem 0;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #5f6f94;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            .card {
+                padding: 1rem;
+            }
+            .konverter-card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>onverter Sistem Bilangan >
+    <div style="text-align: center"><span class="sub">Biner · Desimal · Oktal · Heksadesimal</span></div>
+
+    <div class="konverter-grid" id="konverterGrid">
+        <!-- Semua 12 konversi akan di generate oleh javascript agar rapi dan konsisten -->
+    </div>
+    <footer>
+        ↺ Setiap konversi berdiri sendiri | Input valid sesuai basis | Heksadesimal huruf besar/kecil diperbolehkan
+    </footer>
+</div>
+
+<script>
+    // ---------- Fungsi Konversi murni (validasi + hasil) ----------
+    // Desimal -> Biner
+    function desimalKeBiner(des) {
+        let num = parseInt(des, 10);
+        if (isNaN(num)) return { valid: false, msg: "Masukkan angka desimal valid" };
+        if (num < 0) return { valid: false, msg: "Tidak support negatif untuk demo" };
+        return { valid: true, result: num.toString(2) };
+    }
+    // Desimal -> Oktal
+    function desimalKeOktal(des) {
+        let num = parseInt(des, 10);
+        if (isNaN(num)) return { valid: false, msg: "Masukkan angka desimal valid" };
+        if (num < 0) return { valid: false, msg: "Tidak support negatif" };
+        return { valid: true, result: num.toString(8) };
+    }
+    // Desimal -> Heksadesimal (huruf besar)
+    function desimalKeHex(des) {
+        let num = parseInt(des, 10);
+        if (isNaN(num)) return { valid: false, msg: "Masukkan angka desimal valid" };
+        if (num < 0) return { valid: false, msg: "Tidak support negatif" };
+        return { valid: true, result: num.toString(16).toUpperCase() };
+    }
+
+    // Biner -> Desimal
+    function binerKeDesimal(binStr) {
+        let str = binStr.trim();
+        if (!/^[01]+$/.test(str)) return { valid: false, msg: "Hanya angka 0 dan 1 (biner)" };
+        if (str.length > 60) return { valid: false, msg: "Biner terlalu panjang" };
+        let num = parseInt(str, 2);
+        if (isNaN(num)) return { valid: false, msg: "Biner tidak valid" };
+        return { valid: true, result: num.toString(10) };
+    }
+    // Biner -> Oktal
+    function binerKeOktal(binStr) {
+        let decRes = binerKeDesimal(binStr);
+        if (!decRes.valid) return decRes;
+        let des = parseInt(decRes.result, 10);
+        return { valid: true, result: des.toString(8) };
+    }
+    // Biner -> Heksadesimal
+    function binerKeHex(binStr) {
+        let decRes = binerKeDesimal(binStr);
+        if (!decRes.valid) return decRes;
+        let des = parseInt(decRes.result, 10);
+        return { valid: true, result: des.toString(16).toUpperCase() };
+    }
+
+    // Oktal -> Desimal
+    function oktalKeDesimal(octStr) {
+        let str = octStr.trim();
+        if (!/^[0-7]+$/.test(str)) return { valid: false, msg: "Oktal hanya digit 0-7" };
+        let num = parseInt(str, 8);
+        if (isNaN(num)) return { valid: false, msg: "Oktal tidak valid" };
+        return { valid: true, result: num.toString(10) };
+    }
+    // Oktal -> Biner
+    function oktalKeBiner(octStr) {
+        let decRes = oktalKeDesimal(octStr);
+        if (!decRes.valid) return decRes;
+        let des = parseInt(decRes.result, 10);
+        return { valid: true, result: des.toString(2) };
+    }
+    // Oktal -> Heksadesimal
+    function oktalKeHex(octStr) {
+        let decRes = oktalKeDesimal(octStr);
+        if (!decRes.valid) return decRes;
+        let des = parseInt(decRes.result, 10);
+        return { valid: true, result: des.toString(16).toUpperCase() };
+    }
+
+    // Heksadesimal -> Desimal
+    function hexKeDesimal(hexStr) {
+        let str = hexStr.trim().toUpperCase();
+        if (!/^[0-9A-F]+$/.test(str)) return { valid: false, msg: "Heksadesimal tidak valid (0-9, A-F)" };
+        let num = parseInt(str, 16);
+        if (isNaN(num)) return { valid: false, msg: "Hex tidak valid" };
+        return { valid: true, result: num.toString(10) };
+    }
+    // Heksadesimal -> Oktal
+    function hexKeOktal(hexStr) {
+        let decRes = hexKeDesimal(hexStr);
+        if (!decRes.valid) return decRes;
+        let des = parseInt(decRes.result, 10);
+        return { valid: true, result: des.toString(8) };
+    }
+    // Heksadesimal -> Biner
+    function hexKeBiner(hexStr) {
+        let decRes = hexKeDesimal(hexStr);
+        if (!decRes.valid) return decRes;
+        let des = parseInt(decRes.result, 10);
+        return { valid: true, result: des.toString(2) };
+    }
+
+    // ----- Data konfigurasi 12 konversi sesuai permintaan -----
+    const konversiItems = [
+        { id: "dec2bin", title: "Desimal → Biner",  fromLabel: "Masukkan Desimal:",  placeholder: "contoh: 42",  converter: (val) => desimalKeBiner(val),  inputType: "number",  step: "1" },
+        { id: "dec2oct", title: "Desimal → Oktal",  fromLabel: "Masukkan Desimal:",  placeholder: "contoh: 42",  converter: (val) => desimalKeOktal(val),  inputType: "number", step: "1" },
+        { id: "dec2hex", title: "Desimal → Heksadesimal", fromLabel: "Masukkan Desimal:", placeholder: "contoh: 255", converter: (val) => desimalKeHex(val), inputType: "number", step: "1" },
+        
+        { id: "bin2dec", title: "Biner → Desimal",   fromLabel: "Masukkan Biner:",   placeholder: "contoh: 101010", converter: (val) => binerKeDesimal(val), inputType: "text" },
+        { id: "bin2oct", title: "Biner → Oktal",     fromLabel: "Masukkan Biner:",   placeholder: "contoh: 101010", converter: (val) => binerKeOktal(val), inputType: "text" },
+        { id: "bin2hex", title: "Biner → Heksadesimal", fromLabel: "Masukkan Biner:", placeholder: "contoh: 11111111", converter: (val) => binerKeHex(val), inputType: "text" },
+        
+        { id: "oct2dec", title: "Oktal → Desimal",   fromLabel: "Masukkan Oktal:",   placeholder: "contoh: 52", converter: (val) => oktalKeDesimal(val), inputType: "text" },
+        { id: "oct2bin", title: "Oktal → Biner",     fromLabel: "Masukkan Oktal:",   placeholder: "contoh: 52", converter: (val) => oktalKeBiner(val), inputType: "text" },
+        { id: "oct2hex", title: "Oktal → Heksadesimal", fromLabel: "Masukkan Oktal:", placeholder: "contoh: 52", converter: (val) => oktalKeHex(val), inputType: "text" },
+        
+        { id: "hex2dec", title: "Heksadesimal → Desimal", fromLabel: "Masukkan Heksadesimal:", placeholder: "contoh: 2A atau 2a", converter: (val) => hexKeDesimal(val), inputType: "text" },
+        { id: "hex2oct", title: "Heksadesimal → Oktal", fromLabel: "Masukkan Heksadesimal:", placeholder: "contoh: 2A", converter: (val) => hexKeOktal(val), inputType: "text" },
+        { id: "hex2bin", title: "Heksadesimal → Biner", fromLabel: "Masukkan Heksadesimal:", placeholder: "contoh: FF", converter: (val) => hexKeBiner(val), inputType: "text" }
+    ];
+
+    // Helper untuk menyimpan state tiap card (nilai input & hasil)
+    // Kita akan buat DOM murni dan event listener terpisah agar rapi
+    
+    function buildUI() {
+        const container = document.getElementById("konverterGrid");
+        container.innerHTML = "";
+        
+        konversiItems.forEach(item => {
+            const card = document.createElement("div");
+            card.className = "konverter-card";
+            card.setAttribute("data-id", item.id);
+            
+            // Header
+            const headerDiv = document.createElement("div");
+            headerDiv.className = "judul-konv";
+            headerDiv.innerHTML = `<span>⇄</span> ${item.title}`;
+            
+            // Input area
+            const inputArea = document.createElement("div");
+            inputArea.className = "input-area";
+            
+            const label = document.createElement("label");
+            label.textContent = item.fromLabel;
+            
+            let inputElement;
+            if (item.inputType === "number") {
+                inputElement = document.createElement("input");
+                inputElement.type = "number";
+                inputElement.step = item.step || "1";
+                inputElement.placeholder = item.placeholder;
+                inputElement.value = "";
+            } else {
+                inputElement = document.createElement("input");
+                inputElement.type = "text";
+                inputElement.placeholder = item.placeholder;
+                inputElement.value = "";
+                inputElement.autocomplete = "off";
+            }
+            inputElement.classList.add("input-val");
+            
+            const button = document.createElement("button");
+            button.textContent = "Konversi ➜";
+            
+            inputArea.appendChild(label);
+            inputArea.appendChild(inputElement);
+            inputArea.appendChild(button);
+            
+            // Hasil box
+            const hasilBox = document.createElement("div");
+            hasilBox.className = "hasil-box";
+            const hasilLabelSpan = document.createElement("div");
+            hasilLabelSpan.className = "hasil-label";
+            hasilLabelSpan.textContent = " Hasil konversi:";
+            const hasilValueSpan = document.createElement("div");
+            hasilValueSpan.className = "hasil-value";
+            hasilValueSpan.textContent = "—";
+            const errorSpan = document.createElement("div");
+            errorSpan.className = "error";
+            errorSpan.textContent = "";
+            hasilBox.appendChild(hasilLabelSpan);
+            hasilBox.appendChild(hasilValueSpan);
+            hasilBox.appendChild(errorSpan);
+            
+            card.appendChild(headerDiv);
+            card.appendChild(inputArea);
+            card.appendChild(hasilBox);
+            
+            container.appendChild(card);
+            
+            // Event handler untuk tombol
+            const convFunction = item.converter;
+            button.addEventListener("click", () => {
+                let rawValue = inputElement.value.trim();
+                if (rawValue === "") {
+                    hasilValueSpan.textContent = "—";
+                    errorSpan.textContent = " Masukkan nilai terlebih dahulu";
+                    return;
+                }
+                // untuk number input, jika kosong setelah trim dianggap kosong
+                if (item.inputType === "number" && rawValue === "") {
+                    hasilValueSpan.textContent = "—";
+                    errorSpan.textContent = "Masukkan angka desimal";
+                    return;
+                }
+                const resultObj = convFunction(rawValue);
+                if (resultObj.valid) {
+                    hasilValueSpan.textContent = resultObj.result;
+                    errorSpan.textContent = "";
+                } else {
+                    hasilValueSpan.textContent = "✗ Error";
+                    errorSpan.textContent = resultObj.msg || "Input tidak valid sesuai basis";
+                }
+            });
+            
+            // Optional: Enter key submit
+            inputElement.addEventListener("keypress", (e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    button.click();
+                }
+            });
+        });
+    }
+    
+    buildUI();
+
+    // Tambahan styling responsive + validasi minor untuk memastikan tidak ada error.
+    // Tambahkan informasi tooltip di footer
+    const styleFix = document.createElement('style');
+    styleFix.textContent = `
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button {
+            opacity: 0.5;
+        }
+        .konverter-card .hasil-value {
+            font-size: 1rem;
+            background: #00000033;
+            padding: 4px 8px;
+            border-radius: 14px;
+            display: inline-block;
+            width: auto;
+            word-break: break-all;
+        }
+        button:active {
+            transform: scale(0.96);
+        }
+    `;
+    document.head.appendChild(styleFix);
+    
+    // Tambahan validasi khusus: untuk konversi biner bisa menangani spasi, tapi kita trim saja.
+    // Untuk heksadesimal biarkan uppercase sudah di handle di fungsi. user friendly
+    // Selesaikan.
+    
+    // Supaya lebih rapi bisa juga menambahkan placeholder contoh untuk setiap type
+    // Konversi dengan target yang sudah sesuai di setiap card.
+    // Opsional: prepopulate contoh kecil dengan tombol sampel? tidak perlu, lebih clean.
+    
+    // Memastikan tidak ada bentrok.
+    console.log("✅ Kalkulator konversi 12 metode siap digunakan");
+</script>
+<script src="home-button.js"></script>
+</body>
+</html>

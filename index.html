@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lrn Site/Navigasi/ </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, 'Segoe UI', 'Inter', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #f1f5f9 0%, #e6edf4 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+    }
+
+    .card {
+      max-width: 680px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 2rem;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .header {
+      background: #0f172a;
+      padding: 1.6rem 2rem;
+      color: white;
+    }
+
+    .header h1 {
+      font-size: 1.7rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header h1 i {
+      font-size: 1.8rem;
+      color: #38bdf8;
+    }
+
+    .header p {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-top: 0.5rem;
+    }
+
+    .content {
+      padding: 2rem 2rem 1.8rem;
+    }
+
+    .option-group {
+      margin-bottom: 2rem;
+    }
+
+    .option-group label {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #0f172a;
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+
+    .custom-select {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 1.2rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #0f172a;
+      cursor: pointer;
+      transition: all 0.2s;
+      appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%23334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+    }
+
+    .custom-select optgroup {
+      font-weight: 600;
+      font-style: normal;
+      background-color: #f8fafc;
+    }
+
+    .custom-select option {
+      font-weight: normal;
+    }
+
+    .custom-select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+    }
+
+    .preview-box {
+      background: #f8fafc;
+      border-radius: 1.2rem;
+      padding: 1rem 1.2rem;
+      margin-bottom: 2rem;
+      border-left: 4px solid #3b82f6;
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .preview-box span:first-child {
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .preview-url {
+      font-family: monospace;
+      font-size: 0.9rem;
+      background: #eef2ff;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      color: #1e40af;
+      word-break: break-all;
+    }
+
+    .tombol-run-area {
+      background: #f1f5f9;
+      border-radius: 1.5rem;
+      padding: 1.2rem;
+      margin: 1.5rem 0 0;
+    }
+
+    .run-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      background: #0f172a;
+      border: none;
+      padding: 1rem;
+      border-radius: 2rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 5px 0 #020617;
+      transform: translateY(-2px);
+    }
+
+    .run-button i {
+      font-size: 1.3rem;
+    }
+
+    .run-button:hover {
+      background: #1e293b;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 0 #020617;
+    }
+
+    .run-button:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #020617;
+    }
+
+    .info-tujuan {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      background: white;
+      border-radius: 1rem;
+      padding: 0.7rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      border: 1px solid #e2e8f0;
+    }
+
+    .info-tujuan .label-tujuan {
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .href-value {
+      font-family: monospace;
+      background: #eef2ff;
+      padding: 0.2rem 0.7rem;
+      border-radius: 24px;
+      color: #075985;
+      word-break: break-all;
+    }
+
+    .submit-area {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .submit-confirm {
+      background: #10b981;
+      border: none;
+      padding: 0.8rem 1.8rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .submit-confirm:hover {
+      background: #059669;
+      transform: scale(0.97);
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      background: rgba(15,23,42,0.95);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+      pointer-events: none;
+      z-index: 999;
+      white-space: nowrap;
+    }
+
+    .toast-msg.show {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+
+    footer {
+      font-size: 0.7rem;
+      text-align: center;
+      padding: 1rem 2rem;
+      color: #64748b;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    @media (max-width: 550px) {
+      .content {
+        padding: 1.5rem;
+      }
+      .toast-msg {
+        white-space: normal;
+        text-align: center;
+        width: 85%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <h1>
+      <i class="fas fa-compass"></i> 
+      Pilih Tujuan
+    </h1>
+    <p>Pilih opsi dari daftar, konfirmasi dengan submit, lalu jalankan dengan tombol Run</p>
+  </div>
+  
+  <div class="content">
+    <div class="option-group">
+      <label><i class="fas fa-list-ul"></i> Pilih halaman atau destinasi:</label>
+      <select id="destinationSelect" class="custom-select">
+        <optgroup label="Tools">
+          <option value="kalkulator-ipa.html">Kalkulator IPA</option>
+          <option value="kalkulator-bangun.html">Kalkulator Bangun</option>
+          <option value="singkatan-&-kepanjangan.html">IPS / PPKN - Singkatan & Kepanjangan</option>
+          <option value="konverter-sistem-bilangan.html">Konverter Sistem Bilangan </option>
+          <option value="js-runner.html">JavaScript Runner</option>
+          <option value="https://www.jetbrains.com">JetBrains - IDE profesional</option>
+        </optgroup>
+        <optgroup label="Lainnya">
+          <option value="https://www.google.com">Google - Mesin pencari utama</option>
+          <option value="https://www.wikipedia.org">Wikipedia - Ensiklopedia bebas</option>
+          <option value="https://www.youtube.com">YouTube - Video dan hiburan</option>
+          <option value="https://www.reddit.com">Reddit - Forum komunitas</option>
+          <option value="https://www.amazon.com">Amazon - Belanja online</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div class="preview-box">
+      <span><i class="fas fa-eye"></i> Pilihan saat ini:</span>
+      <span id="previewText" class="preview-url">Belum dipilih</span>
+    </div>
+
+    <div class="submit-area">
+      <button id="submitConfirmBtn" class="submit-confirm">
+        <i class="fas fa-check-circle"></i> Submit
+      </button>
+    </div>
+
+    <div class="tombol-run-area">
+      <button id="runButton" class="run-button">
+        <i class="fas fa-play"></i> Run
+      </button>
+      <div class="info-tujuan">
+        <span class="label-tujuan"><i class="fas fa-link"></i> Tujuan (href) pada tombol Run:</span>
+        <span id="hrefDisplay" class="href-value">--</span>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <i class="fas fa-share-alt"></i> Pilihan tersimpan di tombol Run
+  </footer>
+</div>
+
+<div id="toastMessage" class="toast-msg">Pilihan dikonfirmasi, tujuan siap di Run</div>
+
+<script>
+  const selectEl = document.getElementById('destinationSelect');
+  const previewTextSpan = document.getElementById('previewText');
+  const hrefDisplaySpan = document.getElementById('hrefDisplay');
+  const runBtn = document.getElementById('runButton');
+  const submitBtn = document.getElementById('submitConfirmBtn');
+  const toast = document.getElementById('toastMessage');
+
+  let confirmedUrl = null;
+
+  function isValidUrl(url) {
+    if (!url) return false;
+    url = url.trim();
+    return (url.startsWith('http://') || 
+            url.startsWith('https://') || 
+            url.startsWith('/') ||
+            url.startsWith('./') ||
+            url.startsWith('../') ||
+            url.includes('.html') ||
+            url.includes('.htm') ||
+            (url.length > 0 && !url.includes(' ')));
+  }
+
+  function showMessage(msg, isError = false) {
+    toast.textContent = msg || (isError ? "Gagal" : "Berhasil");
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 2000);
+  }
+
+  function updatePreviewFromSelect() {
+    const selectedOption = selectEl.options[selectEl.selectedIndex];
+    const selectedText = selectedOption ? selectedOption.text : "Tidak ada opsi";
+    previewTextSpan.innerText = selectedText;
+  }
+
+  function confirmSelectionAndWriteToHref() {
+    const selectedIndex = selectEl.selectedIndex;
+    if (selectedIndex === -1) {
+      showMessage("Tidak ada opsi yang dipilih", true);
+      return false;
+    }
+    
+    const selectedOption = selectEl.options[selectedIndex];
+    const selectedUrl = selectedOption.value;
+    const selectedText = selectedOption.text;
+    
+    if (!selectedUrl || selectedUrl.trim() === "") {
+      showMessage("URL tidak valid, pilihan tidak memiliki URL", true);
+      return false;
+    }
+    
+    if (!isValidUrl(selectedUrl)) {
+      showMessage("URL mungkin tidak valid: " + selectedUrl.substring(0, 50), true);
+      return false;
+    }
+    
+    confirmedUrl = selectedUrl;
+    hrefDisplaySpan.innerText = confirmedUrl;
+    previewTextSpan.innerText = selectedText;
+    
+    hrefDisplaySpan.style.transition = "0.1s";
+    hrefDisplaySpan.style.backgroundColor = "#d9f99d";
+    setTimeout(() => {
+      hrefDisplaySpan.style.backgroundColor = "#eef2ff";
+    }, 300);
+    
+    showMessage("Dikonfirmasi: " + selectedText.substring(0, 40) + " -> " + confirmedUrl);
+    return true;
+  }
+  
+  function runNavigation() {
+    if (!confirmedUrl) {
+      showMessage("Belum ada tujuan yang dikonfirmasi. Silakan klik Submit terlebih dahulu.", true);
+      runBtn.style.transform = "translateY(0px)";
+      setTimeout(() => { runBtn.style.transform = ""; }, 150);
+      return;
+    }
+    
+    let targetUrl = confirmedUrl;
+    
+    if (!isValidUrl(targetUrl)) {
+      showMessage("URL tidak valid: " + targetUrl.substring(0, 50), true);
+      return;
+    }
+    
+    showMessage("Mengarahkan ke " + targetUrl + " ...", false);
+    
+    setTimeout(() => {
+      window.location.href = targetUrl;
+    }, 80);
+  }
+  
+  submitBtn.addEventListener('click', function() {
+    confirmSelectionAndWriteToHref();
+  });
+  
+  runBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    runNavigation();
+  });
+  
+  selectEl.addEventListener('change', function() {
+    updatePreviewFromSelect();
+    if (confirmedUrl) {
+      var currentSelectedVal = selectEl.options[selectEl.selectedIndex].value;
+      if (currentSelectedVal !== confirmedUrl) {
+        var previewBox = document.querySelector('.preview-box');
+        var oldHint = previewBox.querySelector('.hint-change');
+        if(oldHint) oldHint.remove();
+        var hintSpan = document.createElement('span');
+        hintSpan.className = 'hint-change';
+        hintSpan.style.fontSize = '0.7rem';
+        hintSpan.style.marginLeft = '8px';
+        hintSpan.style.background = '#fde047';
+        hintSpan.style.padding = '2px 8px';
+        hintSpan.style.borderRadius = '20px';
+        hintSpan.style.color = '#422006';
+        hintSpan.innerHTML = '<i class="fas fa-sync-alt"></i> baru, klik Submit';
+        previewBox.appendChild(hintSpan);
+        setTimeout(function() {
+          if(hintSpan && hintSpan.remove) hintSpan.remove();
+        }, 2000);
+      }
+    }
+  });
+  
+  var initOption = selectEl.options[selectEl.selectedIndex];
+  if(initOption) {
+    previewTextSpan.innerText = initOption.text;
+  } else {
+    previewTextSpan.innerText = "Pilih opsi";
+  }
+  hrefDisplaySpan.innerText = "-- (belum dikonfirmasi)";
+  confirmedUrl = null;
+  
+  runBtn.title = "Klik untuk pergi ke halaman tujuan yang telah dikonfirmasi";
+  submitBtn.title = "Konfirmasi pilihan dan tulis URL ke tombol Run";
+</script>
+</body>
+</html>

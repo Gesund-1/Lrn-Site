@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Kalkulator IPA Lengkap - SMP Kelas 7, 8, 9</title>
+    <link rel="stylesheet" href="btn.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        body {
+            background: linear-gradient(145deg, #e9f4f8 0%, #d4e4ec 100%);
+            margin: 0;
+            padding: 24px 16px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.9rem;
+            color: #1a4d5f;
+            margin: 0 0 8px 0;
+        }
+        .sub {
+            text-align: center;
+            color: #2c6979;
+            margin-bottom: 32px;
+        }
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .tab-btn {
+            background: #cbd5e1;
+            color: #1a4d5f;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .tab-btn i {
+            margin-right: 8px;
+        }
+        .tab-btn.active {
+            background: #1e6f5c;
+            color: white;
+            box-shadow: 0 4px 12px rgba(30,111,92,0.3);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 24px;
+        }
+        .card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 28px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+            padding: 20px 24px 26px;
+            transition: 0.2s;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            background: white;
+        }
+        .card h2 {
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 12px;
+            color: #1a5d4e;
+            border-left: 6px solid #2c9c82;
+            padding-left: 16px;
+        }
+        .card h2 i {
+            margin-right: 10px;
+            color: #2c9c82;
+        }
+        .card h3 {
+            font-size: 0.9rem;
+            margin: 14px 0 6px 0;
+            color: #1f5e6b;
+            font-weight: 600;
+        }
+        .rumus {
+            background: #fef6dd;
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-family: monospace;
+            margin-bottom: 16px;
+            color: #855f1a;
+            border-left: 4px solid #ffb347;
+        }
+        .rumus i {
+            margin-right: 6px;
+            color: #ffb347;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px 14px;
+            margin: 6px 0 10px 0;
+            border: 1px solid #cbd5e1;
+            border-radius: 28px;
+            font-size: 0.95rem;
+            background: white;
+        }
+        input:focus {
+            border-color: #2c9c82;
+            outline: none;
+            box-shadow: 0 0 0 2px #a0e0d0;
+        }
+        button {
+            background: #1e6f5c;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 6px 6px 0 0;
+            transition: 0.2s;
+        }
+        button i {
+            margin-right: 6px;
+        }
+        button:hover {
+            background: #0f5545;
+            transform: scale(0.97);
+        }
+        .hasil {
+            background: #e2f3ef;
+            padding: 12px 16px;
+            border-radius: 20px;
+            margin-top: 16px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-left: 5px solid #1e6f5c;
+            color: #1a3e36;
+        }
+        .hasil i {
+            margin-right: 6px;
+            color: #1e6f5c;
+        }
+        .small-note {
+            font-size: 0.7rem;
+            color: #5d7b86;
+            margin-top: 10px;
+            text-align: center;
+        }
+        footer {
+            text-align: center;
+            margin-top: 42px;
+            padding: 18px;
+            color: #2c5a66;
+            background: rgba(255,248,225,0.7);
+            border-radius: 60px;
+            font-size: 0.8rem;
+        }
+        hr {
+            margin: 10px 0;
+            border-color: #cce3e9;
+        }
+        @media (max-width: 700px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .tab-btn {
+                padding: 6px 18px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1><i class="fas fa-flask"></i> Kalkulator IPA Lengkap SMP <i class="fas fa-calculator"></i></h1>
+    <div class="sub">Kelas 7 - 8 - 9 | Semua Rumus Penting</div>
+
+    <div class="tab-buttons">
+        <button class="tab-btn active" onclick="openTab(event, 'kelas7')"><i class="fas fa-book"></i> Kelas 7</button>
+        <button class="tab-btn" onclick="openTab(event, 'kelas8')"><i class="fas fa-book-open"></i> Kelas 8</button>
+        <button class="tab-btn" onclick="openTab(event, 'kelas9')"><i class="fas fa-graduation-cap"></i> Kelas 9</button>
+    </div>
+
+    <!-- KELAS 7 -->
+    <div id="kelas7" class="tab-content active">
+        <div class="grid">
+            <div class="card">
+                <h2><i class="fas fa-cube"></i> Massa Jenis</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> ρ = m / V | m = ρ × V | V = m / ρ</div>
+                <h3>Massa (kg atau gram)</h3>
+                <input type="number" id="massa7" step="any" placeholder="contoh: 500">
+                <h3>Volume (m³ atau cm³)</h3>
+                <input type="number" id="volume7" step="any" placeholder="contoh: 200">
+                <button onclick="hitungMassaJenis()"><i class="fas fa-calculator"></i> Hitung</button>
+                <div class="hasil" id="hasilMassaJenis"><i class="fas fa-chart-line"></i> ρ = ...</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-temperature-high"></i> Konversi Suhu</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> C : R : (F-32) : (K-273) = 5 : 4 : 9 : 5</div>
+                <h3>Masukkan suhu & pilih satuan</h3>
+                <input type="number" id="suhuInput" step="any" placeholder="contoh: 100">
+                <select id="satuanAsal">
+                    <option value="C">Celcius (°C)</option>
+                    <option value="R">Reamur (°R)</option>
+                    <option value="F">Fahrenheit (°F)</option>
+                    <option value="K">Kelvin (K)</option>
+                </select>
+                <button onclick="konversiSuhu()"><i class="fas fa-exchange-alt"></i> Konversi</button>
+                <div class="hasil" id="hasilSuhu"><i class="fas fa-thermometer-half"></i> Hasil konversi</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-fire"></i> Kalor</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> Q = m × c × ΔT | Q = m × L</div>
+                <h3>Massa (kg), Kalor jenis, ΔT (°C)</h3>
+                <input type="number" id="massaKalor" step="any" placeholder="massa (kg)">
+                <input type="number" id="cKalor" step="any" placeholder="kalor jenis (J/kg°C)">
+                <input type="number" id="deltaTkalor" step="any" placeholder="ΔT (°C)">
+                <button onclick="hitungKalor()"><i class="fas fa-calculator"></i> Hitung Kalor</button>
+                <div class="hasil" id="hasilKalor"><i class="fas fa-bolt"></i> Q = ... Joule</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-ruler-combined"></i> Pemuaian Panjang</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> L = L₀ × (1 + α × ΔT)</div>
+                <h3>L₀ (m), α (/°C), ΔT (°C)</h3>
+                <input type="number" id="lo" step="any" placeholder="L₀ (m)">
+                <input type="number" id="alpha" step="any" placeholder="α (/°C)">
+                <input type="number" id="deltatMuai" step="any" placeholder="ΔT (°C)">
+                <button onclick="hitungMuai()"><i class="fas fa-calculator"></i> Hitung</button>
+                <div class="hasil" id="hasilMuai"><i class="fas fa-arrows-alt-h"></i> L = ... m</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-car"></i> GLB (Gerak Lurus Beraturan)</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> v = s / t | s = v × t | t = s / v</div>
+                <h3>Jarak (m) & Waktu (s)</h3>
+                <input type="number" id="jarakGLB" step="any" placeholder="jarak (m)">
+                <input type="number" id="waktuGLB" step="any" placeholder="waktu (s)">
+                <button onclick="hitungGLB()"><i class="fas fa-tachometer-alt"></i> Hitung Kecepatan</button>
+                <div class="hasil" id="hasilGLB"><i class="fas fa-speedometer"></i> v = ... m/s</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-rocket"></i> GLBB (Gerak Lurus Berubah Beraturan)</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> vₜ = v₀ + a·t | s = v₀·t + ½·a·t²</div>
+                <h3>v₀ (m/s), a (m/s²), t (s)</h3>
+                <input type="number" id="vo" step="any" placeholder="v₀">
+                <input type="number" id="aGLBB" step="any" placeholder="percepatan a">
+                <input type="number" id="tGLBB" step="any" placeholder="waktu t">
+                <button onclick="hitungGLBB()"><i class="fas fa-chart-line"></i> Hitung</button>
+                <div class="hasil" id="hasilGLBB"><i class="fas fa-arrow-right"></i> vₜ = ... m/s <br> s = ... m</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KELAS 8 -->
+    <div id="kelas8" class="tab-content">
+        <div class="grid">
+            <div class="card">
+                <h2><i class="fas fa-compress-alt"></i> Tekanan Zat Padat</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> P = F / A | F = m × g</div>
+                <h3>Gaya (N) & Luas (m²)</h3>
+                <input type="number" id="gayaTekan" step="any" placeholder="Gaya (N)">
+                <input type="number" id="luasTekan" step="any" placeholder="Luas (m²)">
+                <button onclick="hitungTekanan()"><i class="fas fa-calculator"></i> Hitung</button>
+                <div class="hasil" id="hasilTekanan"><i class="fas fa-chart-bar"></i> P = ... Pa</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-water"></i> Tekanan Hidrostatis</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> Pₕ = ρ × g × h</div>
+                <h3>ρ (kg/m³), g (m/s²), h (m)</h3>
+                <input type="number" id="rhoHidro" step="any" placeholder="massa jenis (kg/m³)">
+                <input type="number" id="gHidro" step="any" placeholder="gravitasi g (9.8)">
+                <input type="number" id="hHidro" step="any" placeholder="kedalaman h (m)">
+                <button onclick="hitungHidrostatis()"><i class="fas fa-calculator"></i> Hitung</button>
+                <div class="hasil" id="hasilHidro"><i class="fas fa-tachometer-alt"></i> Pₕ = ... Pa</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-ship"></i> Hukum Archimedes</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> Fₐ = ρ × g × V_cair</div>
+                <h3>ρ cairan (kg/m³), V tercelup (m³)</h3>
+                <input type="number" id="rhoArch" step="any" placeholder="ρ cair (kg/m³)">
+                <input type="number" id="vArch" step="any" placeholder="V tercelup (m³)">
+                <button onclick="hitungArchimedes()"><i class="fas fa-calculator"></i> Hitung</button>
+                <div class="hasil" id="hasilArch"><i class="fas fa-arrow-up"></i> Fₐ = ... N</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-waveform"></i> Getaran & Gelombang</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> f = n/t, T = t/n, v = λ × f</div>
+                <h3>n (jumlah), t (s), λ (m)</h3>
+                <input type="number" id="nGetar" step="any" placeholder="jumlah getaran">
+                <input type="number" id="tGetar" step="any" placeholder="waktu (s)">
+                <input type="number" id="lambdaGetar" step="any" placeholder="λ (m)">
+                <button onclick="hitungGelombang()"><i class="fas fa-calculator"></i> Hitung</button>
+                <div class="hasil" id="hasilGelombang"><i class="fas fa-chart-line"></i> f = ... Hz, T = ... s, v = ... m/s</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-volume-up"></i> Cepat Rambat Bunyi</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> v = s / t</div>
+                <h3>Jarak (m) dan waktu (s)</h3>
+                <input type="number" id="jarakBunyi" step="any" placeholder="jarak (m)">
+                <input type="number" id="waktuBunyi" step="any" placeholder="waktu (s)">
+                <button onclick="hitungBunyi()"><i class="fas fa-calculator"></i> Hitung</button>
+                <div class="hasil" id="hasilBunyi"><i class="fas fa-soundwave"></i> v = ... m/s</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-eye"></i> Cermin & Lensa</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> 1/f = 1/s + 1/s' , M = |s'/s|</div>
+                <h3>s (cm), s' (cm)</h3>
+                <input type="number" id="sBenda" step="any" placeholder="s (cm)">
+                <input type="number" id="sBayang" step="any" placeholder="s' (cm)">
+                <button onclick="hitungCermin()"><i class="fas fa-calculator"></i> Hitung</button>
+                <div class="hasil" id="hasilCermin"><i class="fas fa-magnet"></i> f = ... cm, M = ...x</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KELAS 9 -->
+    <div id="kelas9" class="tab-content">
+        <div class="grid">
+            <div class="card">
+                <h2><i class="fas fa-bolt"></i> Hukum Ohm</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> V = I × R | I = V/R | R = V/I</div>
+                <h3>Tegangan (V), Arus (A)</h3>
+                <input type="number" id="tegangan" step="any" placeholder="V (volt)">
+                <input type="number" id="arus" step="any" placeholder="I (ampere)">
+                <button onclick="hitungOhm()"><i class="fas fa-calculator"></i> Hitung R</button>
+                <div class="hasil" id="hasilOhm"><i class="fas fa-resistor"></i> R = ... Ohm</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-code-branch"></i> Rangkaian Seri & Paralel</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> R_seri = R₁+R₂+... | 1/R_par = 1/R₁+1/R₂</div>
+                <h3>Masukkan 3 nilai hambatan (Ohm)</h3>
+                <input type="number" id="r1" step="any" placeholder="R₁">
+                <input type="number" id="r2" step="any" placeholder="R₂">
+                <input type="number" id="r3" step="any" placeholder="R₃">
+                <button onclick="hitungHambatan()"><i class="fas fa-calculator"></i> Hitung</button>
+                <div class="hasil" id="hasilHambatan"><i class="fas fa-chart-network"></i> R_seri = ... Ohm, R_paralel = ... Ohm</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-lightbulb"></i> Daya Listrik</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> P = V × I | P = I² × R | P = V² / R</div>
+                <h3>V (volt) & I (ampere)</h3>
+                <input type="number" id="voltDaya" step="any" placeholder="Tegangan (V)">
+                <input type="number" id="arusDaya" step="any" placeholder="Arus (A)">
+                <button onclick="hitungDaya()"><i class="fas fa-calculator"></i> Hitung</button>
+                <div class="hasil" id="hasilDaya"><i class="fas fa-charging-station"></i> P = ... Watt</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-battery-full"></i> Energi Listrik</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> W = P × t (Joule atau kWh)</div>
+                <h3>Daya (Watt) & waktu (jam)</h3>
+                <input type="number" id="dayaEnergi" step="any" placeholder="Daya (Watt)">
+                <input type="number" id="waktuEnergi" step="any" placeholder="waktu (jam)">
+                <button onclick="hitungEnergi()"><i class="fas fa-calculator"></i> Hitung</button>
+                <div class="hasil" id="hasilEnergi"><i class="fas fa-charging-station"></i> W = ... kWh = ... Joule</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-flask"></i> pH & Laju Reaksi</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> pH = -log[H⁺] | v = ΔC/Δt</div>
+                <h3>[H⁺] (M)</h3>
+                <input type="number" id="konsH" step="any" placeholder="[H⁺] contoh 0.0001">
+                <button onclick="hitungPHkelas9()"><i class="fas fa-calculator"></i> Hitung pH</button>
+                <div class="hasil" id="hasilPHkelas9"><i class="fas fa-chart-line"></i> pH = ...</div>
+                <hr>
+                <input type="number" id="deltaCReaksi" step="any" placeholder="ΔC (M)">
+                <input type="number" id="deltaTReaksi" step="any" placeholder="Δt (detik)">
+                <button onclick="hitungLajuReaksi()"><i class="fas fa-calculator"></i> Hitung Laju</button>
+                <div class="hasil" id="hasilLajuReaksi"><i class="fas fa-tachometer-alt"></i> v = ... M/s</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-dna"></i> Persilangan Genetika</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> Monohibrid = 3:1 , Dihibrid = 9:3:3:1</div>
+                <h3>Total Monohibrid</h3>
+                <input type="number" id="totalMono" step="any" placeholder="total individu">
+                <button onclick="hitungMono()"><i class="fas fa-calculator"></i> Hitung 3:1</button>
+                <div class="hasil" id="hasilMono"><i class="fas fa-chart-pie"></i> Dominan : Resesif = ...</div>
+                <h3>Total Dihibrid (F2)</h3>
+                <input type="number" id="totalDihibrid9" step="any" placeholder="total F2">
+                <button onclick="hitungDihibridLengkap()"><i class="fas fa-calculator"></i> Hitung 9:3:3:1</button>
+                <div class="hasil" id="hasilDihibridLengkap"><i class="fas fa-chart-bar"></i> Hasil perbandingan</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-microscope"></i> Pertumbuhan Mikroba</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> Nₜ = N₀ × 2ⁿ</div>
+                <h3>N₀ awal & jumlah generasi (n)</h3>
+                <input type="number" id="n0Mikro" step="any" placeholder="N₀ awal">
+                <input type="number" id="nGenerasi" step="any" placeholder="n (generasi)">
+                <button onclick="hitungMikroba()"><i class="fas fa-calculator"></i> Hitung</button>
+                <div class="hasil" id="hasilMikroba"><i class="fas fa-chart-growth"></i> Nₜ = ... sel</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-solar-panel"></i> Efisiensi Energi</h2>
+                <div class="rumus"><i class="fas fa-chalkboard"></i> η = (E_out / E_in) × 100%</div>
+                <h3>Energi input & output (Joule)</h3>
+                <input type="number" id="ein" step="any" placeholder="Energi input">
+                <input type="number" id="eout" step="any" placeholder="Energi output">
+                <button onclick="hitungEfisiensi9()"><i class="fas fa-calculator"></i> Hitung</button>
+                <div class="hasil" id="hasilEfisiensi9"><i class="fas fa-chart-line"></i> η = ... %</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fas fa-calculator"></i> Kalkulator IPA lengkap untuk SMP Kelas 7, 8, 9
+        <br><i class="fas fa-chalkboard-teacher"></i> Meliputi: massa jenis, suhu, kalor, pemuaian, GLB/GLBB, tekanan, hidrostatis, Archimedes, gelombang, bunyi, optik, listrik (Ohm, seri/paralel, daya, energi), pH, laju reaksi, genetika, bioteknologi, efisiensi energi.
+    </footer>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    // KELAS 7 FUNCTIONS
+    function hitungMassaJenis() {
+        let m = parseFloat(document.getElementById('massa7').value);
+        let v = parseFloat(document.getElementById('volume7').value);
+        if (isNaN(m) || isNaN(v) || v <= 0) { alert("Masukkan massa & volume (volume > 0)"); return; }
+        let rho = m / v;
+        document.getElementById('hasilMassaJenis').innerHTML = '<i class="fas fa-chart-line"></i> ρ = ' + rho.toFixed(4) + ' kg/m³ (atau g/cm³ sesuai satuan)';
+    }
+
+    function konversiSuhu() {
+        let nilai = parseFloat(document.getElementById('suhuInput').value);
+        let asal = document.getElementById('satuanAsal').value;
+        if (isNaN(nilai)) { alert("Masukkan angka suhu"); return; }
+        let c, r, f, k;
+        if (asal === 'C') { c = nilai; r = nilai * 4/5; f = nilai * 9/5 + 32; k = nilai + 273; }
+        else if (asal === 'R') { c = nilai * 5/4; r = nilai; f = nilai * 9/4 + 32; k = c + 273; }
+        else if (asal === 'F') { c = (nilai - 32) * 5/9; r = c * 4/5; f = nilai; k = c + 273; }
+        else { k = nilai; c = nilai - 273; r = c * 4/5; f = c * 9/5 + 32; }
+        document.getElementById('hasilSuhu').innerHTML = '<i class="fas fa-thermometer-half"></i> Celcius: ' + c.toFixed(2) + '°C | Reamur: ' + r.toFixed(2) + '°R | Fahrenheit: ' + f.toFixed(2) + '°F | Kelvin: ' + k.toFixed(2) + 'K';
+    }
+
+    function hitungKalor() {
+        let m = parseFloat(document.getElementById('massaKalor').value);
+        let c = parseFloat(document.getElementById('cKalor').value);
+        let dt = parseFloat(document.getElementById('deltaTkalor').value);
+        if (isNaN(m) || isNaN(c) || isNaN(dt)) { alert("Lengkapi data"); return; }
+        let q = m * c * dt;
+        document.getElementById('hasilKalor').innerHTML = '<i class="fas fa-bolt"></i> Q = ' + q.toFixed(2) + ' Joule';
+    }
+
+    function hitungMuai() {
+        let lo = parseFloat(document.getElementById('lo').value);
+        let alpha = parseFloat(document.getElementById('alpha').value);
+        let dt = parseFloat(document.getElementById('deltatMuai').value);
+        if (isNaN(lo) || isNaN(alpha) || isNaN(dt)) { alert("Lengkapi data"); return; }
+        let l = lo * (1 + alpha * dt);
+        document.getElementById('hasilMuai').innerHTML = '<i class="fas fa-arrows-alt-h"></i> L = ' + l.toFixed(5) + ' m (ΔL = ' + (lo * alpha * dt).toFixed(5) + ' m)';
+    }
+
+    function hitungGLB() {
+        let s = parseFloat(document.getElementById('jarakGLB').value);
+        let t = parseFloat(document.getElementById('waktuGLB').value);
+        if (isNaN(s) || isNaN(t) || t <= 0) { alert("Masukkan jarak dan waktu (t > 0)"); return; }
+        let v = s / t;
+        document.getElementById('hasilGLB').innerHTML = '<i class="fas fa-speedometer"></i> v = ' + v.toFixed(2) + ' m/s';
+    }
+
+    function hitungGLBB() {
+        let vo = parseFloat(document.getElementById('vo').value);
+        let a = parseFloat(document.getElementById('aGLBB').value);
+        let t = parseFloat(document.getElementById('tGLBB').value);
+        if (isNaN(vo) || isNaN(a) || isNaN(t)) { alert("Lengkapi data"); return; }
+        let vt = vo + a * t;
+        let s = vo * t + 0.5 * a * t * t;
+        document.getElementById('hasilGLBB').innerHTML = '<i class="fas fa-arrow-right"></i> vₜ = ' + vt.toFixed(2) + ' m/s <br> s = ' + s.toFixed(2) + ' m';
+    }
+
+    // KELAS 8 FUNCTIONS
+    function hitungTekanan() {
+        let f = parseFloat(document.getElementById('gayaTekan').value);
+        let a = parseFloat(document.getElementById('luasTekan').value);
+        if (isNaN(f) || isNaN(a) || a <= 0) { alert("Masukkan gaya (N) dan luas (m² > 0)"); return; }
+        let p = f / a;
+        document.getElementById('hasilTekanan').innerHTML = '<i class="fas fa-chart-bar"></i> P = ' + p.toFixed(2) + ' Pascal (N/m²)';
+    }
+
+    function hitungHidrostatis() {
+        let rho = parseFloat(document.getElementById('rhoHidro').value);
+        let g = parseFloat(document.getElementById('gHidro').value);
+        let h = parseFloat(document.getElementById('hHidro').value);
+        if (isNaN(rho) || isNaN(g) || isNaN(h)) { alert("Lengkapi data"); return; }
+        let ph = rho * g * h;
+        document.getElementById('hasilHidro').innerHTML = '<i class="fas fa-tachometer-alt"></i> Pₕ = ' + ph.toFixed(2) + ' Pa';
+    }
+
+    function hitungArchimedes() {
+        let rho = parseFloat(document.getElementById('rhoArch').value);
+        let v = parseFloat(document.getElementById('vArch').value);
+        if (isNaN(rho) || isNaN(v)) { alert("Masukkan ρ dan V"); return; }
+        let fa = rho * 9.8 * v;
+        document.getElementById('hasilArch').innerHTML = '<i class="fas fa-arrow-up"></i> Fₐ = ' + fa.toFixed(2) + ' N (dengan g=9.8)';
+    }
+
+    function hitungGelombang() {
+        let n = parseFloat(document.getElementById('nGetar').value);
+        let t = parseFloat(document.getElementById('tGetar').value);
+        let lam = parseFloat(document.getElementById('lambdaGetar').value);
+        if (isNaN(n) || isNaN(t) || t <= 0) { alert("Masukkan jumlah getaran dan waktu"); return; }
+        let f = n / t;
+        let T = t / n;
+        let v = !isNaN(lam) ? lam * f : null;
+        document.getElementById('hasilGelombang').innerHTML = '<i class="fas fa-chart-line"></i> f = ' + f.toFixed(3) + ' Hz, T = ' + T.toFixed(3) + ' s' + (v !== null ? ', v = ' + v.toFixed(2) + ' m/s' : '');
+    }
+
+    function hitungBunyi() {
+        let s = parseFloat(document.getElementById('jarakBunyi').value);
+        let t = parseFloat(document.getElementById('waktuBunyi').value);
+        if (isNaN(s) || isNaN(t) || t <= 0) { alert("Masukkan jarak dan waktu"); return; }
+        let v = s / t;
+        document.getElementById('hasilBunyi').innerHTML = '<i class="fas fa-soundwave"></i> v = ' + v.toFixed(2) + ' m/s';
+    }
+
+    function hitungCermin() {
+        let s = parseFloat(document.getElementById('sBenda').value);
+        let sp = parseFloat(document.getElementById('sBayang').value);
+        if (isNaN(s) || isNaN(sp) || s <= 0) { alert("Masukkan s dan s' (cm)"); return; }
+        let f = 1 / ((1/s) + (1/sp));
+        let m = Math.abs(sp / s);
+        document.getElementById('hasilCermin').innerHTML = '<i class="fas fa-magnet"></i> f = ' + f.toFixed(2) + ' cm, M = ' + m.toFixed(2) + 'x';
+    }
+
+    // KELAS 9 FUNCTIONS
+    function hitungOhm() {
+        let v = parseFloat(document.getElementById('tegangan').value);
+        let i = parseFloat(document.getElementById('arus').value);
+        if (isNaN(v) || isNaN(i) || i <= 0) { alert("Masukkan V dan I (I > 0)"); return; }
+        let r = v / i;
+        document.getElementById('hasilOhm').innerHTML = '<i class="fas fa-resistor"></i> R = ' + r.toFixed(2) + ' Ohm';
+    }
+
+    function hitungHambatan() {
+        let r1 = parseFloat(document.getElementById('r1').value);
+        let r2 = parseFloat(document.getElementById('r2').value);
+        let r3 = parseFloat(document.getElementById('r3').value);
+        if (isNaN(r1) || isNaN(r2) || isNaN(r3)) { alert("Masukkan 3 hambatan"); return; }
+        let seri = r1 + r2 + r3;
+        let paralel = 1 / ((1/r1) + (1/r2) + (1/r3));
+        document.getElementById('hasilHambatan').innerHTML = '<i class="fas fa-chart-network"></i> R_seri = ' + seri.toFixed(2) + ' Ohm, R_paralel = ' + paralel.toFixed(2) + ' Ohm';
+    }
+
+    function hitungDaya() {
+        let v = parseFloat(document.getElementById('voltDaya').value);
+        let i = parseFloat(document.getElementById('arusDaya').value);
+        if (isNaN(v) || isNaN(i)) { alert("Masukkan V dan I"); return; }
+        let p = v * i;
+        document.getElementById('hasilDaya').innerHTML = '<i class="fas fa-charging-station"></i> P = ' + p.toFixed(2) + ' Watt';
+    }
+
+    function hitungEnergi() {
+        let p = parseFloat(document.getElementById('dayaEnergi').value);
+        let t = parseFloat(document.getElementById('waktuEnergi').value);
+        if (isNaN(p) || isNaN(t)) { alert("Masukkan daya (W) dan waktu (jam)"); return; }
+        let kwh = p * t / 1000;
+        let joule = p * t * 3600;
+        document.getElementById('hasilEnergi').innerHTML = '<i class="fas fa-charging-station"></i> W = ' + kwh.toFixed(3) + ' kWh = ' + joule.toFixed(1) + ' Joule';
+    }
+
+    function hitungPHkelas9() {
+        let h = parseFloat(document.getElementById('konsH').value);
+        if (isNaN(h) || h <= 0) { alert("Masukkan [H⁺] positif"); return; }
+        let ph = -Math.log10(h);
+        document.getElementById('hasilPHkelas9').innerHTML = '<i class="fas fa-chart-line"></i> pH = ' + ph.toFixed(2);
+    }
+
+    function hitungLajuReaksi() {
+        let dc = parseFloat(document.getElementById('deltaCReaksi').value);
+        let dt = parseFloat(document.getElementById('deltaTReaksi').value);
+        if (isNaN(dc) || isNaN(dt) || dt <= 0) { alert("Masukkan ΔC dan Δt > 0"); return; }
+        let v = Math.abs(dc / dt);
+        document.getElementById('hasilLajuReaksi').innerHTML = '<i class="fas fa-tachometer-alt"></i> v = ' + v.toFixed(5) + ' M/s';
+    }
+
+    function hitungMono() {
+        let total = parseFloat(document.getElementById('totalMono').value);
+        if (isNaN(total) || total <= 0) { alert("Masukkan total individu"); return; }
+        let dominan = total * 0.75;
+        let resesif = total * 0.25;
+        document.getElementById('hasilMono').innerHTML = '<i class="fas fa-chart-pie"></i> Dominan (75%) = ' + Math.round(dominan) + ' , Resesif (25%) = ' + Math.round(resesif);
+    }
+
+    function hitungDihibridLengkap() {
+        let total = parseFloat(document.getElementById('totalDihibrid9').value);
+        if (isNaN(total) || total <= 0) { alert("Masukkan total F2"); return; }
+        let fen1 = total * 9/16;
+        let fen2 = total * 3/16;
+        let fen3 = total * 3/16;
+        let fen4 = total * 1/16;
+        document.getElementById('hasilDihibridLengkap').innerHTML = '<i class="fas fa-chart-bar"></i> 9/16 = ' + Math.round(fen1) + ' , 3/16 = ' + Math.round(fen2) + ' , 3/16 = ' + Math.round(fen3) + ' , 1/16 = ' + Math.round(fen4);
+    }
+
+    function hitungMikroba() {
+        let n0 = parseFloat(document.getElementById('n0Mikro').value);
+        let n = parseFloat(document.getElementById('nGenerasi').value);
+        if (isNaN(n0) || isNaN(n)) { alert("Masukkan N₀ dan n"); return; }
+        let nt = n0 * Math.pow(2, n);
+        document.getElementById('hasilMikroba').innerHTML = '<i class="fas fa-chart-growth"></i> Nₜ = ' + nt.toFixed(2) + ' sel';
+    }
+
+    function hitungEfisiensi9() {
+        let ein = parseFloat(document.getElementById('ein').value);
+        let eout = parseFloat(document.getElementById('eout').value);
+        if (isNaN(ein) || isNaN(eout) || ein <= 0) { alert("Masukkan energi input > 0"); return; }
+        let ef = (eout / ein) * 100;
+        document.getElementById('hasilEfisiensi9').innerHTML = '<i class="fas fa-chart-line"></i> η = ' + ef.toFixed(2) + ' %';
+    }
+</script>
+<script src="home-button.js"></script>
+</body>
+</html>
